@@ -236,10 +236,14 @@ function roundabout_to_world(pos) {
 }
 
 function tangential_velocity() {
-    // TODO: calculate the difference based on the radius to the tip of the gun of cur_player
-    // velocity at (110/px_per_metre) metres out on a circle turning at rpm
-    // speed = distance / time
-    let distance = Math.PI * 2 * (110 / px_per_metre); // circumference
+    let x = Math.cos(players[curplayer].angle * Math.PI / 180) * 265;
+    let y = Math.sin(players[curplayer].angle * Math.PI / 180) * 265;
+    x += Math.cos((180 + players[curplayer].angle + players[curplayer].gunangle) * Math.PI / 180) * 18;
+    y += Math.sin((180 + players[curplayer].angle + players[curplayer].gunangle) * Math.PI / 180) * 18;
+
+    let radius = Math.sqrt(x*x + y*y);
+
+    let distance = Math.PI * 2 * (radius / px_per_metre); // circumference
     let time = 60 / rpm;// time for one rotation
     return distance / time;
 }
