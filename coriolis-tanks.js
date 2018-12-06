@@ -271,7 +271,6 @@ function next_level() {
     level++;
     rpm *= -2;
     $('#rpm').text("Level " + level + ": " + Math.round(Math.abs(rpm) * 10) / 10 + " rpm");
-    render_scores();
     position_players();
     for (let i = 0; i < players.length; i++) {
         players[i].gunangle = 0;
@@ -290,6 +289,8 @@ function render_scores() {
 
 function next_player() {
     show_ball = false;
+
+    render_scores();
 
     let nalive = 0;
     for (let i = 0; i < players.length; i++) {
