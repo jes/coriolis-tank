@@ -5,14 +5,34 @@
 </head>
 <body>
 <h1>Coriolis Tanks</h1>
-<canvas id="canvas1" width="600" height="600"></canvas>
-<canvas style="padding-left: 80px" id="canvas2" width="600" height="600"></canvas><br>
+<p>This is the classic "Tanks" game, except instead of played on a horizontal hillside with gravity, it is played
+on a rotating disc.
+The disc starts off spinning slowly, and increases in speed with each level.</p>
+<p>The left-hand image shows the view from above, from a camera fixed in space. The right-hand image shows the view
+from above, from a camera fixed to the rotating disc.
+Due to the Coriolis effect, the bullets appear to follow curved paths when observed from within the rotating
+disc (the right-hand view).</p>
+<p>You score 1 point for hitting an opponent and lose 1 point for hitting yourself. The walls on the disc block the bullets.
+Good luck.</p>
 
+<hr>
+
+<div style="float:left">
 <span style="font-size:1.5em" id="toplay"></span><br>
 <span id="rpm"></span><br>
-Gun angle: <input type="range" min="-900" max="900" value="0" id="gunangle"><br>
-Fire power: <input type="range" min="100" max="1000" value="0" id="power"><br>
-<button id="shoot">Fire</button>
+Gun angle: <input type="range" min="-900" max="900" value="0" id="gunangle"> <span id="gunanglespan"></span>&deg;<br>
+Fire power: <input type="range" min="1" max="100" value="0" id="power"> <span id="powerspan"></span>%<br>
+<button id="shoot">Fire</button><br><br>
+</div>
+<div style="float:left; padding-left: 30px">
+<div id="scores"></div><br>
+<button id="addplayer">Add player</button>
+</div>
+
+<div style="clear:both"></div>
+
+<canvas id="canvas1" width="600" height="600"></canvas>
+<canvas style="padding-left: 80px" id="canvas2" width="600" height="600"></canvas>
 
 <hr>
 

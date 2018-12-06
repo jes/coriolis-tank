@@ -1,4 +1,5 @@
 let rpm = -0.3;
+let level = 0;
 let vx = 0; // m/s
 let vy = 1; // m/s
 let px_per_metre = 180;
@@ -9,6 +10,7 @@ let ballx = 0; // metres (0,0) = centre of roundabout
 let bally = 0; // metres
 let show_ball = false;
 
+let colours = ['#f22', '#22f', '#2f2', '#2ff', '#f2f', '#ff2', '#28f', '#f28', '#8f2'];
 let players = [make_player('#f22'), make_player('#22f')];
 let curplayer = -1;
 next_player();
@@ -49,10 +51,20 @@ $('#reset').click(function() {
 
 $('#reset').click();
 
+$('#addplayer').click(function() {
+    let newplayer = make_player(colours[players.length%colours.length]);
+    newplayer.alive = true;
+    newplayer.angle = Math.random() * 360;
+    players = players.concat(newplayer);
+    render_scores();
+});
+
 window.setInterval(function() {
     // input
     players[curplayer].gunangle = parseFloat($('#gunangle').val()) / 10;
-    players[curplayer].firepower = parseFloat($('#power').val()) / 1000;
+    players[curplayer].firepower = parseFloat($('#power').val()) / 100;
+    $('#gunanglespan').text(Math.round(players[curplayer].gunangle * 10) / 10);
+    $('#powerspan').text(Math.round(players[curplayer].firepower * 100));
 
     // physics
     let degrees_per_tick = (rpm * 360 * tick_ms) / (60*1000);
@@ -77,7 +89,9 @@ window.setInterval(function() {
             if (ball_collides_player(i)) {
                 // TODO: explosion animation
                 // TODO: "Player N destroyed"
-                if (i != curplayer)
+                if (i == curplayer)
+                    players[curplayer].score--;
+                else
                     players[curplayer].score++;
                 players[i].alive = false;
                 next_player();
@@ -236,7 +250,7 @@ function make_player(colour) {
         angle: 0,
         score: 0,
         gunangle: 0,
-        firepower: 2.5,
+        firepower: 0.5,
         alive: false,
     };
 }
@@ -254,14 +268,24 @@ function position_players() {
 }
 
 function next_level() {
+    level++;
     rpm *= -2;
-    $('#rpm').text("Turning at " + Math.round(Math.abs(rpm) * 10) / 10 + " rpm");
+    $('#rpm').text("Level " + level + ": " + Math.round(Math.abs(rpm) * 10) / 10 + " rpm");
+    render_scores();
     position_players();
     for (let i = 0; i < players.length; i++) {
         players[i].gunangle = 0;
-        players[i].firepower = 2.5;
+        players[i].firepower = 0.5;
         players[i].alive = true;
     }
+}
+
+function render_scores() {
+    let scorehtml = '';
+    for (let i = 0; i < players.length; i++) {
+        scorehtml += "<span style=\"color:" + players[i].colour + "\">Player " + (i+1) + "</span>: " + players[i].score + "<br>";
+    }
+    $('#scores').html(scorehtml);
 }
 
 function next_player() {
@@ -280,7 +304,7 @@ function next_player() {
     } while (!players[curplayer].alive);
 
     $('#gunangle').val(players[curplayer].gunangle * 10);
-    $('#power').val(players[curplayer].firepower * 1000);
+    $('#power').val(players[curplayer].firepower * 100);
     $('#shoot').attr('disabled', false);
     $('#toplay').css('color', players[curplayer].colour);
     $('#toplay').text("Player " + (curplayer+1) + "'s turn");
@@ -321,7 +345,7 @@ function ball_collides_wall() {
         angle += 360;
 
     // outside the roundabout?
-    if (angle > 280)
+    if (radius > 280)
         return true;
 
     // walls
