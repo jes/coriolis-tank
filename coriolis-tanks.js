@@ -105,7 +105,7 @@ window.setInterval(function() {
 
     ctx.beginPath();
     ctx.rect(0,0,600,600);
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
     ctx.fill();
 
     ctx.translate(300,300);
@@ -119,7 +119,7 @@ window.setInterval(function() {
 
     ctx.beginPath();
     ctx.rect(0,0,600,600);
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
     ctx.fill();
 
     ctx.translate(300,300);
