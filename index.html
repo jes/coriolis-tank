@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<title>Coriolis Tanks</title>
+</head>
+<body>
+<h1>Coriolis Tanks</h1>
+<canvas id="canvas1" width="600" height="600"></canvas>
+<canvas style="padding-left: 80px" id="canvas2" width="600" height="600"></canvas><br>
+
+<span style="font-size:1.5em" id="toplay"></span><br>
+<span id="rpm"></span><br>
+Gun angle: <input type="range" min="-900" max="900" value="0" id="gunangle"><br>
+Fire power: <input type="range" min="100" max="1000" value="0" id="power"><br>
+<button id="shoot">Fire</button>
+
+<hr>
+
+<i>By <a href="https://incoherency.co.uk">James Stanley</a>. Please email me if you have any comments: <a href="mailto:james@incoherency.co.uk">james@incoherency.co.uk</a>.</i>
+
+<script src="jquery-3.3.1.min.js"></script>
+<script src="coriolis-tanks.js"></script>
+</body>
+</html>
