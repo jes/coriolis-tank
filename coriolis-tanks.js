@@ -86,7 +86,7 @@ window.setInterval(function() {
     // collision detection against palyers
     if (show_ball) {
         for (let i = 0; i < players.length; i++) {
-            if (ball_collides_player(i)) {
+            if (players[i].alive && ball_collides_player(i)) {
                 // TODO: explosion animation
                 // TODO: "Player N destroyed"
                 if (i == curplayer)
